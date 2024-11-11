@@ -7,9 +7,9 @@ import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Image;
 import edu.macalester.graphics.Point;
 import edu.macalester.graphics.Image.PixelFormat;
-import transform.Knead;
-import transform.PointTransform;
 import transform.Squinch;
+import transform.PointTransform;
+import transform.Warble;
 
 public class Flame {
     private static final int ITER_BATCH_SIZE = 20000;
@@ -41,8 +41,8 @@ public class Flame {
         histogram = new int[size * size];
         rand = new Random();
         transforms = List.of(
-            new Squinch(2, 3),
-            new Knead(0.01, 0.3)
+            new Warble(2, 3),
+            new Squinch(0.01, 0.3)
         );
     }
 

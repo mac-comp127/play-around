@@ -11,7 +11,8 @@ import transform.Warble;
 
 public class ImageWarp {
     public static void main(String[] args) {
-        PixelArray input = new PixelArray(new Image("images/coo.jpeg"));
+        // THING TO TRY: Where did this image come from? There's another option there! Try it too.
+        PixelArray input = new PixelArray(new Image("images/nessie.jpeg"));
 
         int outSize = 1024;
         PixelArray output = new PixelArray(outSize, outSize, input.getChannelCount());

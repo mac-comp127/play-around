@@ -20,6 +20,10 @@ public class ImageWarp {
         canvas.setBackground(Color.BLACK);
 
         for (double x = -5; x < 5; x += 0.02) {
+            // THINGS TO TRY:
+            // - Try changing the transform parameters
+            // - Try Rotate
+            // - Try Warble (works better with one parameter constant)
             PointTransform transform = new Squinch(x, -x / 3);
             Image image = createWarp(input, output, transform);
             canvas.removeAll();
@@ -36,16 +40,23 @@ public class ImageWarp {
         int outSize = output.getWidth();
         double outScale = 3.0 / outSize;
 
+        // For each output pixel...
         for (int outY = 0; outY < output.getHeight(); outY++) {
             for (int outX = 0; outX < output.getWidth(); outX++) {
+                // ...convert pixel coordinates to real numbers approx in the range [-1...1]
                 Point outPoint = new Point(
                     (outX - outSize / 2) * outScale,
                     (outY - outSize / 2) * outScale
                 );
+
+                // Apply transform to get corresponding input coordinates
                 Point inPoint = transform.apply(outPoint);
+
+                // Convert to input pixel coordinates
                 int inX = (int) Math.round(inPoint.getX() / inScale + midX);
                 int inY = (int) Math.round(inPoint.getY() / inScale + midY);
 
+                // Copy all color channels for the input pixel to the output
                 for (int c = 0; c < input.getChannelCount(); c++) {
                     byte pix = input.getPixel(inX, inY, c);
                     output.setPixel(outX, outY, c, pix);

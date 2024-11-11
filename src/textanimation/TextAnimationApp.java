@@ -53,6 +53,9 @@ public class TextAnimationApp {
         randomizeTextColor();
     }
 
+    /**
+     * Converts a Project Gutenburg book to a stream of words.
+     */
     @SuppressWarnings("resource")
     public Iterator<String> readText(InputStream text, boolean fullBookFormat) {
         Stream<String> stream = new Scanner(text, StandardCharsets.UTF_8)
@@ -72,6 +75,9 @@ public class TextAnimationApp {
         return stream.iterator();
     }
 
+    /**
+     * Pulls words at an even rate from the word source and adds them to the screen.
+     */
     private void generateWords(double dt) {
         timeUntilNextWord -= dt;
         while (timeUntilNextWord < 0 && wordGenerator.hasNext()) {
@@ -80,6 +86,9 @@ public class TextAnimationApp {
         }
     }
 
+    /**
+     * Adds one word to the scrolling wall of words.
+     */
     private void showWord(String word) {
         GraphicsText wordGraphics = new GraphicsText(word.trim());
         wordGraphics.setFontSize(FONT_SIZE);
@@ -116,6 +125,9 @@ public class TextAnimationApp {
         textColor = Color.getHSBColor((float) Math.random(), (float) Math.random(), 1);
     }
 
+    /**
+     * Vertically adjusts the screen to keep pace with the words as they appear.
+     */
     private void scroll(double dt) {
         double progress = (nextWordY + nextWordX / canvas.getWidth() * lineHeight) / canvas.getHeight();
         double dy = -dt * Math.max(0, Math.pow(2, progress - 0.7) - 1) * canvas.getHeight();

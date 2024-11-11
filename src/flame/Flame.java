@@ -41,12 +41,19 @@ public class Flame {
         histogram = new int[size * size];
         rand = new Random();
         transforms = List.of(
+            // THINGS TO TRY:
+            // - Change parameters
+            // - Add a Rotate transform
+            // - Try different subsets of transforms
+            // - Try two of same transform w/different params
             new Warble(2, 3),
             new Squinch(0.01, 0.3)
         );
     }
 
     public Image render() {
+        // Apply randomly selected transforms to point, gather 2D histogram
+
         Point p = Point.ORIGIN;
         for (int i = 0; i < ITER_BATCH_SIZE; i++) {
             PointTransform transform = transforms.get(rand.nextInt(transforms.size()));
@@ -55,6 +62,8 @@ public class Flame {
             incrementPixel(p.getX(), p.getY());
         }
 
+        // Convert histogram to colors
+
         float[] pixels = new float[histogram.length * 3];
         for (int i = 0; i < histogram.length; i++) {
             double z = Math.log(histogram[i] + 1) / 10;
@@ -62,10 +71,10 @@ public class Flame {
             pixels[i * 3 + 1] = colorCurve(z, 2, 3, 1.5);
             pixels[i * 3 + 2] = colorCurve(z, 6, 4, 2);
         }
-
         return new Image(size, size, pixels, PixelFormat.RGB);
     }
 
+    // Maps a scaled histogram value z to a color, using color curve parameters a, b, c
     private float colorCurve(double z, double a, double b, double c) {
         return (float)
             Math.pow(

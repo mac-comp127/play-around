@@ -12,6 +12,7 @@ public class Dragon {
 
     Dragon() {
         canvas.setBackground(Color.BLACK);
+        // Draw dragon at increasing levels of recursion
         for (int levels = 0; levels < 20; levels++) {
             canvas.removeAll();
             draw(new Point(300, 500), 0, 500, levels, 1);
